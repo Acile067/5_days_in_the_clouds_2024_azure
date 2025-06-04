@@ -1,4 +1,4 @@
 location         = "North Europe"
 location_short   = "eun"
-application_name = "EteamsLevi9"
+application_name = "eteamslevi9"
 resource_version = "001"
