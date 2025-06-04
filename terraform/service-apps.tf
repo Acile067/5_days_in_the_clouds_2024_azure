@@ -13,10 +13,24 @@ resource azurerm_linux_web_app backend {
   service_plan_id     = azurerm_service_plan.main.id
 
   site_config {
-    ip_restriction_default_action = "Allow"
-    minimum_tls_version           = 1.2
+    ip_restriction {
+      name                      = "Allow-Private-Subnet"
+      priority                  = 100
+      action                    = "Allow"
+      virtual_network_subnet_id = azurerm_subnet.snet_pe.id
+    }
+
+    ip_restriction {
+      name        = "Deny-All"
+      priority    = 200
+      action      = "Deny"
+      ip_address  = "0.0.0.0/0"
+    }
+
+    ip_restriction_default_action = "Deny"
+    minimum_tls_version           = "1.2"
     always_on                     = true
-    
+
     application_stack {
       dotnet_version = "9.0"
     }
