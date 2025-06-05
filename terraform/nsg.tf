@@ -4,7 +4,7 @@ resource azurerm_network_security_group main {
   resource_group_name = azurerm_resource_group.main.name
 }
 
-resource azurerm_network_security_rule deny_all_inbound {
+/*resource azurerm_network_security_rule deny_all_inbound {
   name                        = "deny-all-inbound"
   priority                    = 4000
   direction                   = "Inbound"
@@ -108,3 +108,4 @@ resource "azurerm_network_security_rule" "allow_appgw_inbound" {
   resource_group_name         = azurerm_resource_group.main.name
   network_security_group_name = azurerm_network_security_group.main.name
 }
+*/
