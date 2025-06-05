@@ -44,7 +44,7 @@ resource azurerm_application_gateway main {
 
   backend_address_pool {
     name = local.backend_address_pool_name
-    fqdns = ["${azurerm_linux_web_app.backend.name}.azurewebsites.net"]
+    ip_addresses = [ "10.0.4.189" ]
   }
 
   backend_http_settings {
