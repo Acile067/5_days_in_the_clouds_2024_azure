@@ -79,3 +79,32 @@ resource azurerm_network_security_rule agw-pe {
   network_security_group_name = azurerm_network_security_group.main.name
   depends_on = [azurerm_network_security_group.main]
 }
+
+resource azurerm_network_security_rule be-agw {
+  name                        = "nsgsr-${var.application_name}-be-agw-${var.environment_name}-${var.location_short}-${var.resource_version}"
+  priority                    = 150
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*" 
+  destination_port_range      = "*"
+  source_address_prefix       = "10.0.5.0/24"
+  destination_address_prefix  = "10.0.2.0/24"
+  resource_group_name         = azurerm_resource_group.main.name
+  network_security_group_name = azurerm_network_security_group.main.name
+  depends_on = [azurerm_network_security_group.main]
+}
+
+resource "azurerm_network_security_rule" "allow_appgw_inbound" {
+  name                        = "allow-appgw-inbound-65200-65535"
+  priority                    = 160
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_ranges     = ["65200-65535"]
+  source_address_prefix       = "Internet"
+  destination_address_prefix  = "10.0.2.0/24"
+  resource_group_name         = azurerm_resource_group.main.name
+  network_security_group_name = azurerm_network_security_group.main.name
+}
