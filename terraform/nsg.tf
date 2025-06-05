@@ -104,7 +104,7 @@ resource "azurerm_network_security_rule" "allow_appgw_inbound" {
   source_port_range           = "*"
   destination_port_ranges     = ["65200-65535"]
   source_address_prefix       = "Internet"
-  destination_address_prefix  = "10.0.2.0/24"
+  destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.main.name
   network_security_group_name = azurerm_network_security_group.main.name
 }
