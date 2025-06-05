@@ -44,3 +44,11 @@ resource azurerm_subnet_network_security_group_association snet_backend_nsg_asso
   subnet_id                 = azurerm_subnet.snet_backend.id
   network_security_group_id = azurerm_network_security_group.main.id
 }
+
+# Create subnets for the virtual network Application Gateway
+resource azurerm_subnet snet_app_gateway {
+  name                              = "snet-${var.application_name}-ag-${var.environment_name}-${var.location_short}-${var.resource_version}"
+  resource_group_name               = azurerm_resource_group.main.name
+  virtual_network_name              = azurerm_virtual_network.main.name
+  address_prefixes                  = ["10.0.2.0/24"]
+}
