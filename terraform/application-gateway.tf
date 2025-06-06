@@ -61,7 +61,7 @@ resource azurerm_application_gateway main {
         name                = local.probe_name
         host                = "${azurerm_linux_web_app.backend.name}.azurewebsites.net"
         protocol            = "Http"
-        path                = "/players"
+        path                = "/test"
         interval            = 30
         timeout             = 30
         unhealthy_threshold = 3
