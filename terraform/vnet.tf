@@ -40,9 +40,21 @@ resource azurerm_app_service_virtual_network_swift_connection be_vni {
   subnet_id       = azurerm_subnet.snet_backend.id
 }
 
-resource azurerm_subnet_network_security_group_association snet_backend_nsg_association {
-  subnet_id                 = azurerm_subnet.snet_backend.id
-  network_security_group_id = azurerm_network_security_group.main.id
+resource azurerm_subnet snet_functions {
+  name                 = "snet-${var.application_name}-fn-${var.environment_name}-${var.location_short}-${var.resource_version}"
+  resource_group_name  = azurerm_resource_group.main.name
+  virtual_network_name = azurerm_virtual_network.main.name
+  address_prefixes     = ["10.0.6.0/24"]
+
+  delegation {
+    name = "delegation"
+    service_delegation {
+      name    = "Microsoft.Web/serverFarms"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/action"
+      ]
+    }
+  }
 }
 
 # Create subnets for the virtual network Application Gateway
@@ -52,7 +64,4 @@ resource azurerm_subnet snet_app_gateway {
   virtual_network_name              = azurerm_virtual_network.main.name
   address_prefixes                  = ["10.0.2.0/24"]
 }
-/*resource azurerm_subnet_network_security_group_association snet_app_gateway_nsg_association {
-  subnet_id                 = azurerm_subnet.snet_app_gateway.id
-  network_security_group_id = azurerm_network_security_group.main.id
-}*/
+

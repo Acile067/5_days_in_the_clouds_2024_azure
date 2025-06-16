@@ -1,6 +1,7 @@
 ﻿using _5_days_in_the_clouds_2024.Domain.Contracts;
 using _5_days_in_the_clouds_2024.Infrastructure.Data;
 using _5_days_in_the_clouds_2024.Infrastructure.Repository;
+using _5_days_in_the_clouds_2024.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,7 @@ namespace _5_days_in_the_clouds_2024.Infrastructure
             services.AddTransient<IPlayerRepository, PlayerRepository>();
             services.AddTransient<ITeamRepository, TeamRepository>();
             services.AddTransient<IMatchRepository, MatchRepository>();
+            services.AddHttpClient<IMatchUploaderService, MatchUploaderService>();
 
             return services;
         }

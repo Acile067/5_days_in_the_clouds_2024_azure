@@ -2,6 +2,7 @@
 using _5_days_in_the_clouds_2024.Domain.Entities;
 using AutoMapper;
 using MediatR;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,13 @@ namespace _5_days_in_the_clouds_2024.Application.Features.Match.Commands.CreateM
         private readonly IMatchRepository _matchRepository;
         private readonly ITeamRepository _teamRepository;
         private readonly IMapper _mapper;
-        public CreateMatchCommandHandler(IMatchRepository matchRepository, IMapper mapper, ITeamRepository teamRepository)
+        private readonly IMatchUploaderService _matchUploader;
+        public CreateMatchCommandHandler(IMatchRepository matchRepository, IMapper mapper, ITeamRepository teamRepository, IMatchUploaderService matchUploaderService)
         {
             _matchRepository = matchRepository;
             _mapper = mapper;
             _teamRepository = teamRepository;
+            _matchUploader = matchUploaderService;
         }
 
         public async Task<CreateMatchResponse> Handle(CreateMatchCommand request, CancellationToken cancellationToken)
@@ -57,6 +60,11 @@ namespace _5_days_in_the_clouds_2024.Application.Features.Match.Commands.CreateM
                 WinningTeamId = request.WinningTeamId,
                 Duration = request.Duration
             };
+
+            var json = JsonConvert.SerializeObject(match);
+
+            // Pozovi Azure Function
+            await _matchUploader.UploadMatchAsync(match);
 
             var ret = await _matchRepository.CreateAsync(match);
 
