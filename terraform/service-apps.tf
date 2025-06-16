@@ -47,6 +47,6 @@ resource azurerm_linux_web_app backend {
   }
 
   app_settings = {
-    "ExternalServices__MatchUploadFunctionUrl" = "https://myfunctionapp.azurewebsites.net/api/foo"
+    "ExternalServices__MatchUploadFunctionUrl" = "https://${azurerm_linux_function_app.foo.name}.azurewebsites.net/api/foo"
   }
 }
