@@ -5,7 +5,7 @@ resource azurerm_user_assigned_identity functions {
 }
 
 resource azurerm_service_plan functions {
-  name                = "asp-${var.application_name}-${var.environment_name}-${var.location_short}-${var.resource_version}"
+  name                = "asp-${var.application_name}-${var.environment_name}-${var.location_short}-${var.resource_version}-fn"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   os_type             = "Linux"
