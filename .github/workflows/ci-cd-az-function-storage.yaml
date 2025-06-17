@@ -35,5 +35,5 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: func-eteamslevi9-be-dev-eun-001-foo
+          app-name: func-eteamslevi9-dev-eun-001-foo
           package: ${{ env.WORKING_DIRECTORY }}/publish
