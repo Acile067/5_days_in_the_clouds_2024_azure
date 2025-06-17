@@ -1,5 +1,4 @@
 ﻿using Azure.Storage.Blobs;
-using MatchStorage.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -17,11 +16,10 @@ using System.Threading.Tasks;
 namespace MatchStorage.Function
 {
     public class MatchStorage
-    {
-        private readonly IBuiltRequestProcessor _builtRequestProcessor;
-        public MatchStorage(IBuiltRequestProcessor builtRequestProcessor) 
+    {   
+        public MatchStorage() 
         { 
-            _builtRequestProcessor = builtRequestProcessor ?? throw new ArgumentNullException(nameof(builtRequestProcessor));
+            
         }
 
         [FunctionName("MatchStorage")]
